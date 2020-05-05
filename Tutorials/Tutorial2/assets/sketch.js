@@ -2,24 +2,26 @@ let ship;
 const FORCE = 0.2;
 const SPIN = 0.1;
 const SHOT_LIMIT = 1;
-const INIT_ASTEROID = 3;
+const INIT_ASTEROID = 4;
 let shots;
 let asteroids;
 let debree_pieces;
+let started;
 
 
 function setup(){
-    let canvas = createCanvas(800,600);
+    let canvas = createCanvas(displayWidth*.9,displayHeight*.8);
     canvas.parent('sketch-holder');
     shots = [];
     asteroids = [];
     debree_pieces = [];
     frameRate(30);
-    ship = new Ship(createVector(400,300));
+    ship = new Ship(createVector(width/2,height/2));
     for (let index = 0; index < INIT_ASTEROID; index++){
         asteroids.push(new Asteroid(createVector(random(width),random(height)), createVector(random(-4,4),random(-4,4))))
 
     }
+    started = false;
 }
 
 function draw(){
@@ -27,16 +29,25 @@ function draw(){
 
     checkKeys();
 
-    collisionCheck();
-
     moveShots();
-
-    moveAsteroids();
+    
+    if (asteroids.length > 0){
+        moveAsteroids();
+    } else {
+        celebrate();
+    }
 
     if (ship.wrecked){
         moveDebree();
+        displayReset();
     } else {
         moveShip();
+    }
+
+    if (!started) {
+        displayWelcome();
+    } else {
+        collisionCheck();
     }
 }
 
@@ -67,20 +78,26 @@ function collisionCheck(){
 }
 
 function checkKeys(){
+    
     if (keyIsDown(87)){
+        started=true;
         ship.thrust(FORCE);
     } else if (keyIsDown(83)){
+        started=true;
         ship.thrust(-FORCE);
     } else {
         ship.thrusting = false;
     }
     if (keyIsDown(68)){
+        started=true;
         ship.steer(SPIN);
     }
     if (keyIsDown(65)){
+        started=true;
         ship.steer(-SPIN);
     }
     if (keyIsDown(82)){
+        started=true;
         setup();
     }
 }
@@ -128,4 +145,36 @@ function moveAsteroids(){
 function moveShip(){
     ship.move();
     ship.draw();
+}
+
+function celebrate(){
+    fill(255);
+    textFont('hyperspace');
+    textSize(60);
+    textAlign(CENTER)
+    text('Congratulations!', width/2, height/2-100)
+    textSize(25)
+    text('R to restart', width/2, height/2 + 145)
+}
+
+function displayWelcome(){
+    fill(255);
+    textFont('hyperspace');
+    textAlign(CENTER);
+    textSize(60);
+    text('Asteroids', width/2, height/2 - 100)
+    textSize(25)
+    text('WASD to move', width/2, height/2 + 120)
+    text('SPACEBAR to shoot', width/2, height/2 + 145)
+    text('R to restart', width/2, height/2 + 170)  
+}
+
+function displayReset(){
+    fill(255);
+    textFont('hyperspace');
+    textAlign(CENTER);
+    textSize(60);
+    text('You Died', width/2, height/2 - 100)
+    textSize(25)
+    text('R to restart', width/2, height/2 + 145)
 }

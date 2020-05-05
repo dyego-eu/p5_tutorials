@@ -1,21 +1,23 @@
 <html>
     <head>
-        <script type='text/javascript' src='../../lib/p5.min.js'></script>
-        <script type='text/javascript' src='../../lib/p5.collide2d.min.js'></script>
-        <script type='text/javascript' src='sketch.js'></script>
-        <script type='text/javascript' src='particle.js'></script>
-        <script type='text/javascript' src='ship.js'></script>
-        <script type='text/javascript' src='shot.js'></script> 
-        <script type='text/javascript' src='asteroid.js'></script> 
-        <script type='text/javascript' src='debree.js'></script> 
+        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js'></script>
+        <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/bmoren/p5.collide2D@0.6/p5.collide2d.min.js'></script>
+        <script type='text/javascript' src='assets/sketch.js'></script>
+        <script type='text/javascript' src='assets/particle.js'></script>
+        <script type='text/javascript' src='assets/ship.js'></script>
+        <script type='text/javascript' src='assets/shot.js'></script> 
+        <script type='text/javascript' src='assets/asteroid.js'></script> 
+        <script type='text/javascript' src='assets/debree.js'></script> 
+        <style>
+            @font-face {
+                font-family: 'hyperspace';
+                src: url('assets/hyperspace.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
     </head>
     <body>
-        <h1>Asteroids!</h1>
-        <div>
-            <p> Move with w-a-s-d</p>
-            <p> Shoot with Spacebar</p>
-            <p> Restart with r</p>
-        </div>
         <div id='sketch-holder'></div>
     </body>
 </html>
