@@ -1,17 +1,35 @@
-var ballSize;
+
+let fireworks = [];
+let gravity;
 
 function setup(){
     createCanvas(650,480);
-    ballSize=100;
+    stroke(255);
+    strokeWeight(5);
+    gravity = createVector(0,.2);
+    
+    fireworks.forEach((firework)=>{
+        firework.launch();
+    })
 }
 
 function draw() {
-    background(200);
-    stroke(0);
-    strokeWeight(3);
-    ellipse(mouseX, mouseY, ballSize, ballSize);
+    background(0,0,0,20);
+
+    if(random(1)<.05){
+        fireworks.push(new Firework());
+    }
+
+    fireworks.forEach((firework)=>{
+        firework.update();
+    })
+    checkRelaunch();
 }
 
-function mouseWheel(event){
-    ballSize += event.delta;
+function checkRelaunch(){
+    fireworks.forEach((firework, index, obj)=>{
+        if(firework.pos.y > height){
+            obj.splice(index,1);
+        }
+    })
 }
