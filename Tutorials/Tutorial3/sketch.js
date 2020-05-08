@@ -1,35 +1,26 @@
-
-let fireworks = [];
-let gravity;
+let variable;
+let flock = [];
 
 function setup(){
-    createCanvas(650,480);
-    stroke(255);
-    strokeWeight(5);
-    gravity = createVector(0,.2);
-    
-    fireworks.forEach((firework)=>{
-        firework.launch();
-    })
+    createCanvas(800,600);
+    for(let i=0; i<100; i++){
+        flock.push(new Boid(random(width), random(height)));
+    }
 }
 
 function draw() {
-    background(0,0,0,20);
+    // Comment 
+    background(51);
+    flock[0].mainBoid=true;
 
-    if(random(1)<.05){
-        fireworks.push(new Firework());
-    }
-
-    fireworks.forEach((firework)=>{
-        firework.update();
-    })
-    checkRelaunch();
-}
-
-function checkRelaunch(){
-    fireworks.forEach((firework, index, obj)=>{
-        if(firework.pos.y > height){
-            obj.splice(index,1);
+    flock.forEach((boid, index)=>{
+        if (index != 0 && boid.nearBoid(flock[0], 100)){
+            boid.nearMainBoid=true;
+        } else {
+            boid.nearMainBoid = false;
         }
+        boid.update();
+        boid.show();
+        
     })
 }
